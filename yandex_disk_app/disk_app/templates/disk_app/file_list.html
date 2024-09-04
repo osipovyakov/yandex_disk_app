@@ -16,6 +16,7 @@
     <ul>
         {% for file in files %}
             <li>{{ file.name }}</li>
+            <a href="{% url 'disk_app:download_file' file.path %}">Скачать</a>
         {% endfor %}
     </ul>
 {% else %}

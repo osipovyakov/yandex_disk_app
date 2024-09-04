@@ -1,5 +1,6 @@
 import requests
 from django.shortcuts import render, redirect
+from .file_filter import filter_files
 
 
 def start_page(request):
@@ -41,22 +42,7 @@ def file_list(request):
 
         file_type = request.GET.get('file_type', 'all')
         # Применение фильтра
-        if file_type == 'documents':
-            files = [f for f in files if f.get('mime_type', '').startswith('application/')]
-        elif file_type == 'images':
-            files = [f for f in files if f.get('mime_type', '').startswith('image/')]
-        elif file_type == 'videos':
-            files = [f for f in files if f.get('mime_type', '').startswith('video/')]
-        elif file_type == 'audio':
-            files = [f for f in files if f.get('mime_type', '').startswith('audio/')]
-        elif file_type == 'archives':
-            files = [f for f in files if f.get('mime_type', '').startswith('application/zip') or 
-                                          f.get('mime_type', '').startswith('application/x-rar-compressed')]
-        elif file_type == 'others':
-            files = [f for f in files if not (f.get('mime_type', '').startswith('application/') or 
-                                              f.get('mime_type', '').startswith('image/') or 
-                                              f.get('mime_type', '').startswith('video/') or 
-                                              f.get('mime_type', '').startswith('audio/'))]
+        files = filter_files(files, file_type)
 
         return render(request, 'disk_app/file_list.html', {'files': files, 'file_type': file_type})
     else:
