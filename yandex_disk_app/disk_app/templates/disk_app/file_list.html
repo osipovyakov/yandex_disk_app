@@ -1,0 +1,23 @@
+<form method="get" action="{% url 'disk_app:file_list' %}">
+    <input type="hidden" name="public_key" value="{{ request.GET.public_key }}">
+    <label for="file_type">Фильтр файлов:</label>
+    <select name="file_type" id="file_type" onchange="this.form.submit()">
+        <option value="all" {% if file_type == 'all' %}selected{% endif %}>Все</option>
+        <option value="documents" {% if file_type == 'documents' %}selected{% endif %}>Документы</option>
+        <option value="images" {% if file_type == 'images' %}selected{% endif %}>Изображения</option>
+        <option value="videos" {% if file_type == 'videos' %}selected{% endif %}>Видео</option>
+        <option value="audio" {% if file_type == 'audio' %}selected{% endif %}>Аудио</option>
+        <option value="archives" {% if file_type == 'archives' %}selected{% endif %}>Архивы</option>
+        <option value="others" {% if file_type == 'others' %}selected{% endif %}>Прочие</option>
+    </select>
+</form>
+
+{% if files %}
+    <ul>
+        {% for file in files %}
+            <li>{{ file.name }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Файлы данного типа не найдены.</p>
+{% endif %}

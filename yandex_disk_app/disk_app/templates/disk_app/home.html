@@ -1,0 +1,17 @@
+<html>
+<head>
+    <title>Введите Public Key</title>
+</head>
+<body>
+    <h1>Введите Public Key Яндекс.Диска</h1>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <form method="post">
+        {% csrf_token %}
+        <label for="public_key">Public Key:</label>
+        <input type="text" id="public_key" name="public_key" required>
+        <button type="submit">Перейти к авторизации</button>
+    </form>
+</body>
+</html>
