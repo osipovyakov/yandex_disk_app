@@ -38,13 +38,12 @@ def oauth_callback(request):
             token_data = response.json()
             request.session['access_token'] = token_data['access_token']
 
-            # Получите сохраненный public_key из сессии
+            # Получаем сохраненный public_key из сессии
             public_key = request.session.get('public_key', '')
             
-            # Редирект на список файлов с public_key в URL
+            # Редиректим на список файлов с public_key в URL
             return redirect(f'{reverse("disk_app:file_list")}?public_key={public_key}')
         else:
             return render(request, 'auth_app/error.html', {'message': 'Ошибка при обмене кода на токен доступа.'})
     else:
         return render(request, 'auth_app/error.html', {'message': 'Код авторизации не получен.'})
-

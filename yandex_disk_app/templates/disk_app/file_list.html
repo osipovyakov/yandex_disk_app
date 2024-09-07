@@ -13,12 +13,31 @@
 </form>
 
 {% if files %}
-    <ul>
-        {% for file in files %}
-            <li>{{ file.name }}</li>
-            <a href="{% url 'disk_app:download_file' file.path %}">Скачать</a>
-        {% endfor %}
-    </ul>
+    <form method="post" action="{% url 'disk_app:download_multiple_files' %}" id="multiple-download-form">
+        {% csrf_token %}
+        <label>
+            <input type="checkbox" id="select-all"> Выбрать все
+        </label>
+        <ul>
+            {% for file in files %}
+                <li>
+                    <input type="checkbox" name="selected_files" value="{{ file.path }}" class="file-checkbox">
+                    {{ file.name }}
+                    <a href="{% url 'disk_app:download_file' file.path %}">Скачать</a>
+                </li>
+            {% endfor %}
+        </ul>
+        <button type="submit">Скачать выбранные файлы</button>
+    </form>
+
+    <script>
+        document.getElementById('select-all').addEventListener('change', function() {
+            var checkboxes = document.querySelectorAll('.file-checkbox');
+            for (var checkbox of checkboxes) {
+                checkbox.checked = this.checked;
+            }
+        });
+    </script>
 {% else %}
     <p>Файлы данного типа не найдены.</p>
 {% endif %}
