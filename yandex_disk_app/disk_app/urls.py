@@ -4,7 +4,6 @@ from . import views
 
 app_name = 'disk_app'
 
-
 urlpatterns = [
     path('', views.start_page, name='start_page'),
     path('file_list/', views.file_list, name='file_list'),

@@ -1,7 +1,5 @@
 def filter_files(files, file_type):
-    """
-    Фильтрует список файлов в зависимости от типа файла.
-    """
+    """Фильтрует список файлов в зависимости от типа файла"""
     if file_type == 'documents':
         return [f for f in files if f.get('mime_type', '').startswith('application/')]
     elif file_type == 'images':

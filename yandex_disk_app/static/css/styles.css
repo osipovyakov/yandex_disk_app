@@ -1,0 +1,121 @@
+/* Общие стили для всех страниц */
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.container, .error-container, .file-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+h1 {
+    font-size: 28px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+p, label {
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 15px;
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button, .retry-button {
+    background-color: #3498db;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    max-width: 200px;
+    margin: 20px auto 0;
+}
+
+button:hover, .retry-button:hover {
+    background-color: #2980b9;
+}
+
+/* Стили для формы ввода */
+input[type="text"] {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+
+/* Стили для страницы с файлами */
+.file-container form {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.file-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.file-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.file-list li:last-child {
+    border-bottom: none;
+}
+
+.submit-button {
+    margin-top: 20px;
+}
+
+.select-all {
+    display: block;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.error-message {
+    color: red;
+    font-size: 16px;
+    margin-bottom: 20px;
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+    .container, .error-container, .file-container {
+        padding: 20px;
+        max-width: 100%;
+    }
+
+    button, .retry-button {
+        width: 100%;
+    }
+}

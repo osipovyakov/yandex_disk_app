@@ -1,43 +1,57 @@
-<form method="get" action="{% url 'disk_app:file_list' %}">
-    <input type="hidden" name="public_key" value="{{ request.GET.public_key }}">
-    <label for="file_type">Фильтр файлов:</label>
-    <select name="file_type" id="file_type" onchange="this.form.submit()">
-        <option value="all" {% if file_type == 'all' %}selected{% endif %}>Все</option>
-        <option value="documents" {% if file_type == 'documents' %}selected{% endif %}>Документы</option>
-        <option value="images" {% if file_type == 'images' %}selected{% endif %}>Изображения</option>
-        <option value="videos" {% if file_type == 'videos' %}selected{% endif %}>Видео</option>
-        <option value="audio" {% if file_type == 'audio' %}selected{% endif %}>Аудио</option>
-        <option value="archives" {% if file_type == 'archives' %}selected{% endif %}>Архивы</option>
-        <option value="others" {% if file_type == 'others' %}selected{% endif %}>Прочие</option>
-    </select>
-</form>
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Файлы</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+    <div class="file-container">
+        <form method="get" action="{% url 'disk_app:file_list' %}" class="filter-form">
+            <input type="hidden" name="public_key" value="{{ request.GET.public_key }}">
+            <label for="file_type">Фильтр файлов:</label>
+            <select name="file_type" id="file_type" onchange="this.form.submit()">
+                <option value="all" {% if file_type == 'all' %}selected{% endif %}>Все</option>
+                <option value="documents" {% if file_type == 'documents' %}selected{% endif %}>Документы</option>
+                <option value="images" {% if file_type == 'images' %}selected{% endif %}>Изображения</option>
+                <option value="videos" {% if file_type == 'videos' %}selected{% endif %}>Видео</option>
+                <option value="audio" {% if file_type == 'audio' %}selected{% endif %}>Аудио</option>
+                <option value="archives" {% if file_type == 'archives' %}selected{% endif %}>Архивы</option>
+                <option value="others" {% if file_type == 'others' %}selected{% endif %}>Прочие</option>
+            </select>
+        </form>
 
-{% if files %}
-    <form method="post" action="{% url 'disk_app:download_multiple_files' %}" id="multiple-download-form">
-        {% csrf_token %}
-        <label>
-            <input type="checkbox" id="select-all"> Выбрать все
-        </label>
-        <ul>
-            {% for file in files %}
-                <li>
-                    <input type="checkbox" name="selected_files" value="{{ file.path }}" class="file-checkbox">
-                    {{ file.name }}
-                    <a href="{% url 'disk_app:download_file' file.path %}">Скачать</a>
-                </li>
-            {% endfor %}
-        </ul>
-        <button type="submit">Скачать выбранные файлы</button>
-    </form>
+        {% if files %}
+            <form method="post" action="{% url 'disk_app:download_multiple_files' %}" id="multiple-download-form" class="file-form">
+                {% csrf_token %}
+                <label class="select-all">
+                    <input type="checkbox" id="select-all"> Выбрать все
+                </label>
+                <ul class="file-list">
+                    {% for file in files %}
+                        <li>
+                            <input type="checkbox" name="selected_files" value="{{ file.path }}" class="file-checkbox">
+                            {{ file.name }}
+                            <a href="{% url 'disk_app:download_file' file.path %}" class="download-link">Скачать</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                <button type="submit" class="submit-button">Скачать выбранные файлы</button>
+            </form>
+        {% else %}
+            <p>Файлы данного типа не найдены.</p>
+        {% endif %}
 
-    <script>
-        document.getElementById('select-all').addEventListener('change', function() {
-            var checkboxes = document.querySelectorAll('.file-checkbox');
-            for (var checkbox of checkboxes) {
-                checkbox.checked = this.checked;
-            }
-        });
-    </script>
-{% else %}
-    <p>Файлы данного типа не найдены.</p>
-{% endif %}
+        <script>
+            document.getElementById('select-all').addEventListener('change', function() {
+                var checkboxes = document.querySelectorAll('.file-checkbox');
+                for (var checkbox of checkboxes) {
+                    checkbox.checked = this.checked;
+                }
+            });
+        </script>
+    </div>
+</body>
+</html>
