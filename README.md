@@ -23,7 +23,7 @@
 Склонируйте репозиторий на ваш локальный компьютер:
 
 ```bash
-git clone https://github.com/osipovyakov/django-file-manager.git
+git clone https://github.com/osipovyakov/yandex_disk_app.git
 ```
 
 ### 2. Установка зависимостей
